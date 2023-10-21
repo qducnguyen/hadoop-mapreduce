@@ -1,9 +1,7 @@
 FROM ubuntu:latest
 
-MAINTAINER qducnguyen
+LABEL author="qducnguyen" 
 #environment variables for changing JDK, HADOOP versions and directories
-ENV JDK_TAR_NAME=jdk-8u202-linux-x64.tar.gz
-ENV HADOOP_TAR_NAME=hadoop-3.3.6.tar.gz
 
 #install basic utils and python
 RUN apt update
@@ -13,8 +11,12 @@ RUN apt install -y python3 arp-scan openssh-server
 RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
     cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
-#***setup JDK***#
 WORKDIR /opt
+
+ENV JDK_TAR_NAME=jdk-8u202-linux-x64.tar.gz
+ENV HADOOP_TAR_NAME=hadoop-3.3.6.tar.gz
+
+#***setup JDK***#
 ADD ./assets/${JDK_TAR_NAME} .
 
 #add path variables for JDK

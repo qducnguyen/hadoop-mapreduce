@@ -1,0 +1,37 @@
+services:
+  namenode:
+    build: .
+    image: hadoop_base:latest
+    hostname: namenode-master
+    ports:
+      - 9870:9870
+      - 8088:8088
+    volumes:
+      - ./mapred-src:/opt/mapred-src/
+    tty: true
+  
+  datanode1:
+    depends_on:
+      - namenode
+    image: hadoop_base:latest
+    pull_policy: never
+    hostname: datanode1
+    tty: true
+  
+  datanode2:
+    depends_on:
+      - namenode
+    image: hadoop_base:latest
+    pull_policy: never
+    hostname: datanode2
+    tty: true
+  
+  datanode3:
+    depends_on:
+      - namenode
+    image: hadoop_base:latest
+    pull_policy: never
+    hostname: datanode3
+    tty: true
+    
+    
