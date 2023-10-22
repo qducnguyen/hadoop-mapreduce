@@ -38,6 +38,7 @@ public class MatrixVectorProductDriver {
 
         FileInputFormat.addInputPath(job1, new Path(args[0]));
         FileOutputFormat.setOutputPath(job1, new Path(out, "out1"));
+
         if(!job1.waitForCompletion(true)){
             System.exit(1);
         }

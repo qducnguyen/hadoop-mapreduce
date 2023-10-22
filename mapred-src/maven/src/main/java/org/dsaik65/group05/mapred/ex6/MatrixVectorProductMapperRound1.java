@@ -10,6 +10,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 public class MatrixVectorProductMapperRound1 extends Mapper<Object, Text, CustomIntArrayWritable, CustomIntArrayWritable>{
         
+
         @Override
         public void map(Object key, Text value, Context context
                                         ) throws IOException, InterruptedException {

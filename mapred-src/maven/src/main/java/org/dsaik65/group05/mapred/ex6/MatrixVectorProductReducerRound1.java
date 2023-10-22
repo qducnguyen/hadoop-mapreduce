@@ -7,6 +7,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 
+
 public class MatrixVectorProductReducerRound1 extends 
     Reducer<CustomIntArrayWritable,CustomIntArrayWritable,IntWritable,LongWritable> {
 
@@ -20,6 +21,7 @@ public class MatrixVectorProductReducerRound1 extends
 
             IntWritable[] keyValues = key.get();
             IntWritable key_output =  keyValues[0];
+
             int[] arr = new int[N];
 
             for (CustomIntArrayWritable val : values) {
@@ -35,7 +37,7 @@ public class MatrixVectorProductReducerRound1 extends
 
                 else{
                     if (arr[valValues[1].get()] == 0){
-                        arr[valValues[1].get()] = valValues[1].get();
+                        arr[valValues[1].get()] = valValues[2].get();
                     }
                     else{
                         arr[valValues[1].get()] = arr[valValues[1].get()] * valValues[2].get();
@@ -49,8 +51,11 @@ public class MatrixVectorProductReducerRound1 extends
             }
 
             context.write(key_output, new LongWritable(sum));
+            
 
-  }
+        }
+
+           
 }
 
        
