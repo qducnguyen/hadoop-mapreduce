@@ -26,7 +26,7 @@ public class MeanCalculatorDriver {
         final int N_Square_Root = (int)Math.sqrt((double)N);
         conf.set("N", String.valueOf(N));
 
-        Job job1 = Job.getInstance(conf, "Ex1 Mean Calculator Round 1");
+        Job job1 = Job.getInstance(conf, "Ex2 Mean Calculator Round 1");
         job1.setJarByClass(MeanCalculatorDriver.class);
         job1.setMapperClass(MeanCalculatorMapperRound1.class);
         job1.setOutputKeyClass(IntWritable.class);
@@ -44,7 +44,7 @@ public class MeanCalculatorDriver {
             System.exit(1);
         }
 
-        Job job2 = Job.getInstance(conf, "Ex1 Mean Calculator Round 2");
+        Job job2 = Job.getInstance(conf, "Ex2 Mean Calculator Round 2");
         job2.setJarByClass(MeanCalculatorDriver.class);
         job2.setInputFormatClass(SequenceFileInputFormat.class);
         job2.setNumReduceTasks(1);
