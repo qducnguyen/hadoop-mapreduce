@@ -14,18 +14,18 @@ def calculateRound1(current_key, a_value, v_value):
     for col in a_value[i].keys():
         W_is += a_value[i][col] * v_value[col]
     # compute/output result to STDOUT
-    print('{0:d}\t{1:d},{2:d}'.format(i, s, W_is))
+    print("{0:d}\t{1:d},{2:d}".format(i, s, W_is))
 
 
-#Process input of matrix A
+# Process input of matrix A
 def gatherMatrixA(id, row, col, a_value, val):
     if row not in a_value:
-      a_value[row] = dict()
+        a_value[row] = dict()
     a_value[row][col] = val
     return a_value
 
 
-#Process input of vector V
+# Process input of vector V
 def gatherVectorV(id, row, v_value, val):
     if row not in v_value:
         v_value[row] = dict()
@@ -34,52 +34,51 @@ def gatherVectorV(id, row, v_value, val):
 
 
 def main():
-    #Create data structures to hold the current row/column values
+    # Create data structures to hold the current row/column values
     current_key = None
     a_value, v_value = dict(), dict()
 
     # input comes from STDIN (stream data that goes to the program)
     for line in sys.stdin:
-
-        #Remove leading and trailing whitespace
+        # Remove leading and trailing whitespace
         line = line.strip()
-        
-        #Get key/value
-        key, value = line.split('\t',1)
-        
-        #Parse key/value input
+
+        # Get key/value
+        key, value = line.split("\t", 1)
+
+        # Parse key/value input
         try:
-            key = tuple(map(int, key.split(',')))
-            value = value.split(',')
+            key = tuple(map(int, key.split(",")))
+            value = value.split(",")
             id = value[0]
             row, col, val = int(value[1]), int(value[2]), int(value[3])
         except:
             continue
 
-        #If we are still on the same key...
+        # If we are still on the same key...
         if key == current_key:
-            #Process key/value pair
-            if id == 'A':
+            # Process key/value pair
+            if id == "A":
                 a_value = gatherMatrixA(id, row, col, a_value, val)
             else:
                 v_value = gatherVectorV(id, row, v_value, val)
 
-            #Otherwise, if this is a new key...
+            # Otherwise, if this is a new key...
         else:
-        #If this is a new key and not the first key we've seen
+            # If this is a new key and not the first key we've seen
             if current_key:
                 calculateRound1(current_key, a_value, v_value)
 
             current_key = key
             a_value, v_value = dict(), dict()
-            
-            #Process input for new key
-            if id == 'A':
+
+            # Process input for new key
+            if id == "A":
                 a_value = gatherMatrixA(id, row, col, a_value, val)
             else:
                 v_value = gatherVectorV(id, row, v_value, val)
-    
-    #Compute/output result for the last key
+
+    # Compute/output result for the last key
     if current_key:
         calculateRound1(current_key, a_value, v_value)
 

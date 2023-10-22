@@ -18,8 +18,7 @@ public class CustomIntArrayWritable implements WritableComparable<CustomIntArray
 
     private IntWritable[] values;
 
-
-    public CustomIntArrayWritable(){
+    public CustomIntArrayWritable() {
     }
 
     public CustomIntArrayWritable(IntWritable[] values) {
@@ -34,17 +33,17 @@ public class CustomIntArrayWritable implements WritableComparable<CustomIntArray
     public String toString() {
         IntWritable[] values = get();
         String result = "(";
-        for (IntWritable value : values){
+        for (IntWritable value : values) {
             result += value.toString();
             result += ",";
         }
-        return result.substring(0, result.length() - 1)  + ")";
+        return result.substring(0, result.length() - 1) + ")";
     }
 
     @Override
     public int hashCode() {
         // only care about the second one
-        IntWritable[] values = get(); 
+        IntWritable[] values = get();
         return values[0].get();
     }
 
@@ -52,26 +51,22 @@ public class CustomIntArrayWritable implements WritableComparable<CustomIntArray
     public int compareTo(CustomIntArrayWritable o) {
         // only care two first one
 
-        IntWritable[]  thisValues = this.get();
-        IntWritable[]  thatValues = o.get();
+        IntWritable[] thisValues = this.get();
+        IntWritable[] thatValues = o.get();
         int firstThisValue = thisValues[0].get();
         int secondThisValue = thisValues[1].get();
         int firstThatValue = thatValues[0].get();
         int secondThatValue = thatValues[1].get();
 
-        if (firstThisValue < firstThatValue){
+        if (firstThisValue < firstThatValue) {
             return -1;
-        }
-        else if (firstThisValue > firstThatValue){
+        } else if (firstThisValue > firstThatValue) {
             return 1;
-        }
-        else if (secondThisValue < secondThatValue){
+        } else if (secondThisValue < secondThatValue) {
             return -1;
-        }
-        else if (secondThisValue > secondThatValue){
+        } else if (secondThisValue > secondThatValue) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
 
@@ -80,21 +75,21 @@ public class CustomIntArrayWritable implements WritableComparable<CustomIntArray
     @Override
     public void readFields(DataInput in) throws IOException {
         this.values = new IntWritable[in.readInt()];
-  
-        for(int i = 0; i < this.values.length; ++i) {
-           Writable value = WritableFactories.newInstance(IntWritable.class);
-           value.readFields(in);
-           this.values[i] = (IntWritable) value;
+
+        for (int i = 0; i < this.values.length; ++i) {
+            Writable value = WritableFactories.newInstance(IntWritable.class);
+            value.readFields(in);
+            this.values[i] = (IntWritable) value;
         }
-  
-     }
-  
+
+    }
+
     @Override
     public void write(DataOutput out) throws IOException {
         out.writeInt(this.values.length);
 
-        for(int i = 0; i < this.values.length; ++i) {
+        for (int i = 0; i < this.values.length; ++i) {
             this.values[i].write(out);
-      }
+        }
     }
 }

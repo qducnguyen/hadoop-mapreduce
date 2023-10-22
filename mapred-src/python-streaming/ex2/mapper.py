@@ -4,6 +4,7 @@
 import sys
 import math
 
+
 def read_input(file):
     # Ignore line start with >
     for line in file:
@@ -11,13 +12,13 @@ def read_input(file):
         if len(line_clean) > 0:
             try:
                 yield line_clean
-            except: 
+            except:
                 continue
 
-def main(separator='\t'):
 
+def main(separator="\t"):
     try:
-        n = math.floor(int(sys.argv[1])**.5)
+        n = math.floor(int(sys.argv[1]) ** 0.5)
     except:
         print("Need to get N")
 
@@ -33,6 +34,7 @@ def main(separator='\t'):
         #
         # tab-delimited; the trivial    word count is 1
         print(f"{idx % n}{separator}{val}")
+
 
 if __name__ == "__main__":
     main()

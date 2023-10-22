@@ -12,18 +12,17 @@ import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.Job;
 
 public class MeanCalculatorDriver {
-    public static void main(String[] args) throws Exception{
-        
-        if(args.length != 3){
+    public static void main(String[] args) throws Exception {
+
+        if (args.length != 3) {
             System.out.println("Input Arguments: input_path output_path N");
         }
-
 
         Configuration conf = new Configuration();
         Path out = new Path(args[1]);
 
         final int N = Integer.valueOf(args[2]);
-        final int N_Square_Root = (int)Math.sqrt((double)N);
+        final int N_Square_Root = (int) Math.sqrt((double) N);
         conf.set("N", String.valueOf(N));
 
         Job job1 = Job.getInstance(conf, "Ex2 Mean Calculator Round 1");
@@ -40,7 +39,7 @@ public class MeanCalculatorDriver {
         FileInputFormat.addInputPath(job1, new Path(args[0]));
         FileOutputFormat.setOutputPath(job1, new Path(out, "out1"));
 
-        if(!job1.waitForCompletion(true)){
+        if (!job1.waitForCompletion(true)) {
             System.exit(1);
         }
 

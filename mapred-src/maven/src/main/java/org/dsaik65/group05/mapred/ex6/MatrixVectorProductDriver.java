@@ -11,9 +11,9 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 
 public class MatrixVectorProductDriver {
-        public static void main(String[] args) throws Exception{
-        
-        if(args.length != 4){
+    public static void main(String[] args) throws Exception {
+
+        if (args.length != 4) {
             System.out.println("Input Arguments: input_path output_path M N");
         }
 
@@ -22,7 +22,7 @@ public class MatrixVectorProductDriver {
 
         final int M = Integer.valueOf(args[2]);
         final int N = Integer.valueOf(args[3]);
-        
+
         conf.set("M", String.valueOf(M));
         conf.set("N", String.valueOf(N));
 
@@ -39,7 +39,7 @@ public class MatrixVectorProductDriver {
         FileInputFormat.addInputPath(job1, new Path(args[0]));
         FileOutputFormat.setOutputPath(job1, new Path(out, "out1"));
 
-        if(!job1.waitForCompletion(true)){
+        if (!job1.waitForCompletion(true)) {
             System.exit(1);
         }
 
@@ -56,4 +56,3 @@ public class MatrixVectorProductDriver {
         System.exit(job2.waitForCompletion(true) ? 0 : 1);
     }
 }
-

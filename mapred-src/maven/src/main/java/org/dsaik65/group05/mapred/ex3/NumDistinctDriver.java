@@ -8,19 +8,19 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
+
 public class NumDistinctDriver {
-        public static void main(String[] args) throws Exception{
-        
-        if(args.length != 3){
+    public static void main(String[] args) throws Exception {
+
+        if (args.length != 3) {
             System.out.println("Input Arguments: input_path output_path N");
         }
-
 
         Configuration conf = new Configuration();
         Path out = new Path(args[1]);
 
         final int N = Integer.valueOf(args[2]);
-        final int N_Square_Root = (int)Math.ceil(Math.sqrt((double)N));
+        final int N_Square_Root = (int) Math.ceil(Math.sqrt((double) N));
 
         conf.set("N", String.valueOf(N));
 
@@ -36,8 +36,7 @@ public class NumDistinctDriver {
         FileInputFormat.addInputPath(job1, new Path(args[0]));
         FileOutputFormat.setOutputPath(job1, new Path(out, "out1"));
 
-        
-        if(!job1.waitForCompletion(true)){
+        if (!job1.waitForCompletion(true)) {
             System.exit(1);
         }
 
@@ -54,7 +53,7 @@ public class NumDistinctDriver {
         FileInputFormat.addInputPath(job2, new Path(out, "out1"));
         FileOutputFormat.setOutputPath(job2, new Path(out, "out2"));
 
-        if(!job2.waitForCompletion(true)){
+        if (!job2.waitForCompletion(true)) {
             System.exit(1);
         }
 
@@ -69,12 +68,10 @@ public class NumDistinctDriver {
         job3.setNumReduceTasks(N_Square_Root);
         job3.setOutputFormatClass(SequenceFileOutputFormat.class);
 
-
         FileInputFormat.addInputPath(job3, new Path(out, "out2"));
         FileOutputFormat.setOutputPath(job3, new Path(out, "out3"));
 
-
-        if(!job3.waitForCompletion(true)){
+        if (!job3.waitForCompletion(true)) {
             System.exit(1);
         }
 
@@ -93,4 +90,3 @@ public class NumDistinctDriver {
         System.exit(job4.waitForCompletion(true) ? 0 : 1);
     }
 }
-

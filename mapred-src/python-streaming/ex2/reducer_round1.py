@@ -5,6 +5,7 @@ from operator import itemgetter
 import sys
 import math
 
+
 def reduce1():
     curr_idx = "0"
     curr_val = None
@@ -15,7 +16,7 @@ def reduce1():
         # remove leading and trailing whitespace
         line = line.strip()
         # parse the input we got from mapper.py
-        idx, val = line.split('\t', 1)
+        idx, val = line.split("\t", 1)
 
         # convert count (currently a string) to int
         try:
@@ -30,12 +31,13 @@ def reduce1():
         if idx == curr_idx:
             current_mean += val
         else:
-            print(f'{curr_idx}\t{current_mean}')
+            print(f"{curr_idx}\t{current_mean}")
             curr_idx = idx
             current_mean = val
 
     # do not forget to output the last word if needed!
-    print(f'{curr_idx}\t{current_mean}')
+    print(f"{curr_idx}\t{current_mean}")
+
 
 def main():
     # try:
@@ -44,6 +46,7 @@ def main():
     #     print("Need to get N")
 
     reduce1()
+
 
 if __name__ == "__main__":
     main()

@@ -7,55 +7,48 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 
+public class MatrixVectorProductReducerRound1 extends
+        Reducer<CustomIntArrayWritable, CustomIntArrayWritable, IntWritable, LongWritable> {
 
-public class MatrixVectorProductReducerRound1 extends 
-    Reducer<CustomIntArrayWritable,CustomIntArrayWritable,IntWritable,LongWritable> {
+    @Override
+    public void reduce(CustomIntArrayWritable key, Iterable<CustomIntArrayWritable> values, Context context)
+            throws IOException, InterruptedException {
 
-        @Override
-        public void reduce(CustomIntArrayWritable key, Iterable<CustomIntArrayWritable> values, Context context
-                        ) throws IOException, InterruptedException {
-            
-            Configuration conf = context.getConfiguration();
-            
-            final int N = Integer.parseInt(conf.get("N"));
+        Configuration conf = context.getConfiguration();
 
-            IntWritable[] keyValues = key.get();
-            IntWritable key_output =  keyValues[0];
+        final int N = Integer.parseInt(conf.get("N"));
 
-            int[] arr = new int[N];
+        IntWritable[] keyValues = key.get();
+        IntWritable key_output = keyValues[0];
 
-            for (CustomIntArrayWritable val : values) {
-                IntWritable[] valValues = val.get();
-                if(valValues[1].get() == -1){
-                    if (arr[valValues[0].get()] == 0){
-                        arr[valValues[0].get()] = valValues[2].get();
-                    }
-                    else{
-                        arr[valValues[0].get()] = arr[valValues[0].get()] * valValues[2].get();
-                    }
-                }
+        int[] arr = new int[N];
 
-                else{
-                    if (arr[valValues[1].get()] == 0){
-                        arr[valValues[1].get()] = valValues[2].get();
-                    }
-                    else{
-                        arr[valValues[1].get()] = arr[valValues[1].get()] * valValues[2].get();
-                    }
+        for (CustomIntArrayWritable val : values) {
+            IntWritable[] valValues = val.get();
+            if (valValues[1].get() == -1) {
+                if (arr[valValues[0].get()] == 0) {
+                    arr[valValues[0].get()] = valValues[2].get();
+                } else {
+                    arr[valValues[0].get()] = arr[valValues[0].get()] * valValues[2].get();
                 }
             }
-            
-            long sum = 0;
-            for (int i =0; i<N;i++){
-                sum += arr[i];
+
+            else {
+                if (arr[valValues[1].get()] == 0) {
+                    arr[valValues[1].get()] = valValues[2].get();
+                } else {
+                    arr[valValues[1].get()] = arr[valValues[1].get()] * valValues[2].get();
+                }
             }
-
-            context.write(key_output, new LongWritable(sum));
-            
-
         }
 
-           
-}
+        long sum = 0;
+        for (int i = 0; i < N; i++) {
+            sum += arr[i];
+        }
 
-       
+        context.write(key_output, new LongWritable(sum));
+
+    }
+
+}
